@@ -8,13 +8,13 @@ var yacht_controller = require('../controllers/yacht');
 router.get('/', api_controller.api);
 /// YACHT ROUTES ///
 // POST request for creating a Yacht.
-router.post('/yacht', yacht_controller.yacht_create_post);
+router.post('/yachts', yacht_controller.yacht_create_post);
 // DELETE request to delete yacht.
-router.delete('/yacht/:id', yacht_controller.yacht_delete);
+router.delete('/yachts/:id', yacht_controller.yacht_delete);
 // PUT request to update yacht.
-router.put('/yacht/:id', yacht_controller.yacht_update_put);
+router.put('/yachts/:id', yacht_controller.yacht_update_put);
 // GET request for one yacht.
-router.get('/yacht/:id', yacht_controller.yacht_detail);
+router.get('/yachts/:id', yacht_controller.yacht_detail);
 // GET request for list of all yacht items.
-router.get('/yacht', yacht_controller.yacht_list);
+router.get('/yachts', yacht_controller.yacht_list);
 module.exports = router;
