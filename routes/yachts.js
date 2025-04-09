@@ -4,4 +4,5 @@ var router = express.Router();
 
 /* GET yachts */
 router.get('/', yacht_controllers.yacht_view_all_Page );
+
 module.exports = router;

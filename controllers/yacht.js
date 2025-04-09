@@ -1,13 +1,29 @@
 var Yacht = require('../models/yacht');
 // List of all Yachts
-exports.yacht_list = function(req, res) {
- res.send('NOT IMPLEMENTED: Yacht list');
-};
+exports.yachts_list = async function(req, res) {
+    try{
+        let theYachts = await Yacht.find();
+        res.send(theYachts);
+    }
+    catch(err){
+        res.status(500);
+        res.send(`{"error": ${err}}`);
+    }
+   };
+
 // for a specific Yacht.
-exports.yacht_detail = function(req, res) {
- res.send('NOT IMPLEMENTED: Yacht detail: ' + req.params.id);
-};
-// Handle Costume create on POST.
+exports.yacht_detail = async function(req, res) {
+    console.log("detail" + req.params.id)
+        try {
+            result = await Yacht.findById(req.params.id)
+            res.send(result)
+        } catch (error) {
+            res.status(500)
+            res.send(`{"error": document for id ${req.params.id} not found`);
+        }
+    };
+
+// Handle Yacht create on POST.
 exports.yacht_create_post = async function(req, res) {
     console.log(req.body)
     let document = new Yacht();
@@ -27,35 +43,28 @@ exports.yacht_create_post = async function(req, res) {
         res.send(`{"error": ${err}}`);
     }
 };
+
 // Handle Yacht delete from on DELETE.
 exports.yacht_delete = function(req, res) {
  res.send('NOT IMPLEMENTED: Yacht delete DELETE ' + req.params.id);
 };
+
 // Handle Yacht update form on PUT.
 exports.yacht_update_put = function(req, res) {
  res.send('NOT IMPLEMENTED: Yacht update PUT' + req.params.id);
 };
 
-// List of all Yachts
-exports.yachts_list = async function(req, res) {
-    try{
-    theYachts = await Yacht.find();
-    res.send(theYachts);
-    }
-    catch(err){
-    res.status(500);
-    res.send(`{"error": ${err}}`);
-    }
-   };
+
 
 // VIEWS
 // Handle a show all view
 exports.yacht_view_all_Page = async function(req, res) {
     try{
-    theYachts = await Yacht.find();
-    res.render('yachts', { title: 'Yacht Search Results', results: theYachts });
+        theYachts = await Yacht.find();
+        res.render('yachts', { title: 'Yacht Search Results', results: theYachts });
     }
     catch(err){
-    res.status(500);
-    res.send(`{"error": ${err}}`);
+        res.status(500);
+        res.send(`{"error": ${err}}`);
     }};
+
