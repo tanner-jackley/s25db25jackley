@@ -13,15 +13,15 @@ exports.yachts_list = async function(req, res) {
 
 // for a specific Yacht.
 exports.yacht_detail = async function(req, res) {
-    console.log("detail" + req.params.id)
-        try {
-            result = await Yacht.findById(req.params.id)
-            res.send(result)
-        } catch (error) {
-            res.status(500)
-            res.send(`{"error": document for id ${req.params.id} not found`);
-        }
-    };
+    console.log("detail" + req.params.id);
+    try {
+        let result = await Yacht.findById(req.params.id);
+        res.send(result);
+    } catch (error) {
+        res.status(500);
+        res.send(`{"error": "document for id ${req.params.id} not found"}`);
+    }
+};
 
 // Handle Yacht create on POST.
 exports.yacht_create_post = async function(req, res) {
@@ -50,8 +50,31 @@ exports.yacht_delete = function(req, res) {
 };
 
 // Handle Yacht update form on PUT.
-exports.yacht_update_put = function(req, res) {
- res.send('NOT IMPLEMENTED: Yacht update PUT' + req.params.id);
+exports.yacht_update_put = async function(req, res) {
+    console.log(`update on id ${req.params.id} with body
+    ${JSON.stringify(req.body)}`)
+    try {
+        let toUpdate = await Yacht.findById( req.params.id)
+
+        // If the yacht is not found, return a 404 error
+        if (!toUpdate) {
+            res.status(404).send(`{"error": "Yacht with id ${req.params.id} not found"}`);
+            return;
+        }
+        
+        // Do updates of properties
+        if(req.body.yacht_type)
+        toUpdate.yacht_type = req.body.yacht_type;
+        if(req.body.cost) toUpdate.cost = req.body.cost;
+        if(req.body.size) toUpdate.size = req.body.size;
+        let result = await toUpdate.save();
+        console.log("Success " + result)
+        res.send(result)
+    } catch (err) {
+        res.status(500)
+        res.send(`{"error": ${err}: Update for id ${req.params.id}
+        failed`);
+    }
 };
 
 

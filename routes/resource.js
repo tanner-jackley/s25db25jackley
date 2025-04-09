@@ -4,9 +4,6 @@ var router = express.Router();
 var api_controller = require('../controllers/api');
 var yacht_controller = require('../controllers/yacht');
 
-// Debugging: Log the yacht_controller to check if it's imported correctly
-console.log("yacht_controller:", yacht_controller);
-
 /// API ROUTE ///
 // GET resources base.
 router.get('/', api_controller.api);
