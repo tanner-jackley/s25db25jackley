@@ -20,26 +20,26 @@ var Yacht = require("./models/yacht");
 
 // We can seed the collection if needed on server start
 async function recreateDB(){
-// Delete everything
-await Yacht.deleteMany();
-let instance1 = new Yacht({brand: "Sunseeker", year_built: 2015, engine_power: 1500});
-instance1.save().then(doc=>{
-  console.log("First object saved")}
-  ).catch(err=>{
-    console.error(err)
- });
-let instance2 = new Yacht({brand: "Azimut", year_built: 2010, engine_power: 800});
-instance2.save().then(doc=>{
-  console.log("Second object saved")}
-  ).catch(err=>{
-    console.error(err)
- });
-let instance3 = Yacht({brand: "Princess", year_built: 2020, engine_power: 2500});
-instance3.save().then(doc=>{
-  console.log("Third object saved")}
-  ).catch(err=>{
-    console.error(err)
- });
+  // Delete everything
+  await Yacht.deleteMany();
+  let instance1 = new Yacht({brand: "Sunseeker", year_built: 2015, engine_power: 1500});
+  instance1.save().then(doc=>{
+    console.log("First object saved")}
+    ).catch(err=>{
+      console.error(err)
+  });
+  let instance2 = new Yacht({brand: "Azimut", year_built: 2010, engine_power: 800});
+  instance2.save().then(doc=>{
+    console.log("Second object saved")}
+    ).catch(err=>{
+      console.error(err)
+  });
+  let instance3 = Yacht({brand: "Princess", year_built: 2020, engine_power: 2500});
+  instance3.save().then(doc=>{
+    console.log("Third object saved")}
+    ).catch(err=>{
+      console.error(err)
+  });
 }
 let reseed = true;
 if (reseed) {recreateDB();}
