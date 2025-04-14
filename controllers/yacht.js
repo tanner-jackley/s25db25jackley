@@ -98,5 +98,19 @@ exports.yacht_view_all_Page = async function(req, res) {
     catch(err){
         res.status(500);
         res.send(`{"error": ${err}}`);
-    }};
+    }
+};
+// Handle a show one view with id specified by query
+exports.yacht_view_one_Page = async function(req, res) {
+    console.log("single view for id " + req.query.id)
+    try{
+        result = await Yacht.findById( req.query.id)
+        res.render('yachtdetail',
+            { title: 'Yacht Detail', toShow: result });
+    }
+    catch(err){
+        res.status(500)
+        res.send(`{'error': '${err}'}`);
+    }
+    };
 
