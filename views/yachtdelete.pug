@@ -1,0 +1,46 @@
+extends layout
+block content
+    h1= title
+    if (toShow == null)
+        h2 No instance to delete
+    else
+        - let yachtid = toShow._id
+        - let yachtbrand = toShow.brand
+        - let yachtengine = toShow.engine_power
+        - let yachtyear = toShow.year_built
+        - let actionid = "/resource/yachts/" + yachtid
+        script let actionid = "#{actionid}"
+        div
+            div.row
+                div(class='yachtAttr mr-3') Yacht ID is:
+                div #{yachtid}
+            div.row
+                div(class='yachtAttr mr-3') Yacht Brand is:
+                div #{yachtbrand}
+            div.row
+                div(class='yachtAttr mr-3') Engine Power is:
+                div #{yachtengine}
+            div.row
+                div(class='yachtAttr mr-3') Year Built is:
+                div #{yachtyear}
+        button(class="btn btn-danger m-2" onclick="deleteOnid()") Delete
+        button(class="btn btn-secondary m-2" onclick="cancel()") Cancel
+    script.
+        function cancel() {
+            // Go back to the home page for the costume collection
+            window.location.href='/yachts'
+        }
+    script.
+        function deleteOnid() {
+            console.log("starting delete")
+            fetch(actionid, {
+                method: 'DELETE'   // Don't need a body for the delete
+            }).then((resp) => {
+                return resp.json(); // or resp.text() or whatever the server sends
+            }).then((body) => {
+                alert("Delete succeeded")
+                window.location.href='/yachts'
+            }).catch((error) => {
+                alert("Delete failed " + error)
+            });
+        }
