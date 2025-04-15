@@ -1,20 +1,23 @@
 extends layout
 block content
     h1= title
-    - let yachtid = toShow._id
-    - let yachtbrand = toShow.brand
-    - let yachtyear = toShow.year_built
-    - let yachtengine = toShow.engine_power
-    div
-        div.row
-            div(class='yachtAttr mr-3') Yacht ID is:
-            div #{yachtid}
-        div.row
-            div(class='yachtAttr mr-3') Yacht Brand is:
-            div #{yachtbrand}
-        div.row
-            div(class='yachtAttr mr-3') Year Built is:
-            div #{yachtyear}
-        div.row
-            div(class='yachtAttr mr-3') Engine Power is:
-            div #{yachtengine} HP
+    if (toShow == null)
+        h2 No instance to show
+    else
+        - let yachtid = toShow._id
+        - let yachtbrand = toShow.brand
+        - let yachtyear = toShow.year_built
+        - let yachtengine = toShow.engine_power
+        div
+            div.row
+                div(class='yachtAttr mr-3') Yacht ID is:
+                div #{yachtid}
+            div.row
+                div(class='yachtAttr mr-3') Yacht Brand is:
+                div #{yachtbrand}
+            div.row
+                div(class='yachtAttr mr-3') Year Built is:
+                div #{yachtyear}
+            div.row
+                div(class='yachtAttr mr-3') Engine Power is:
+                div #{yachtengine} HP

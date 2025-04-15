@@ -2,41 +2,41 @@ extends layout
 
 block content
     h1= title
-    - let yachtid = toShow._id
-    - let yachtbrand = toShow.brand
-    - let yachtyear = toShow.year_built
-    - let yachtengine = toShow.engine_power
-    div.row(class='mb-2')
-        div.mr-1 ID is
-        div #{yachtid}
-    - let actionid = "/resource/yachts/" + yachtid
-    form(id='YachtForm', action=actionid, method="PUT")
-        div.form-group
-            label.yachtAttr(for='brand') Yacht Brand
-            input#brand(type='text', name='brand', value=yachtbrand)
-        div.form-group
-            label.yachtAttr(for='year_built') Year Built
-            input#year_built(type='number', name='year_built', value=yachtyear)
-        div.form-group
-            label.yachtAttr(for='engine_power') Engine Power (HP)
-            input#engine_power(type='number', name='engine_power', value=yachtengine)
-        input(type="submit", value="Update Yacht", class="btn btn-primary")
+    if (toShow == null)
+        h2 No instance to update
+    else
+        - let yachtid = toShow._id
+        - let yachtbrand = toShow.brand
+        - let yachtyear = toShow.year_built
+        - let yachtengine = toShow.engine_power
+        div.row(class='mb-2')
+            div.mr-1 ID is
+            div #{yachtid}
+        - let actionid = "/resource/yachts/" + yachtid
+        form(id='YachtForm', action=actionid, method="PUT")
+            div.form-group
+                label.yachtAttr(for='brand') Yacht Brand
+                input#brand(type='text', name='brand', value=yachtbrand)
+            div.form-group
+                label.yachtAttr(for='year_built') Year Built
+                input#year_built(type='number', name='year_built', value=yachtyear)
+            div.form-group
+                label.yachtAttr(for='engine_power') Engine Power (HP)
+                input#engine_power(type='number', name='engine_power', value=yachtengine)
+            input(type="submit", value="Update Yacht", class="btn btn-primary")
 
-    script.
-        document.forms['YachtForm'].addEventListener('submit', (event) => {
-            event.preventDefault();
-            // Show user that the form is being submitted
-            fetch(event.target.action, {
-                method: 'PUT',
-                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                body: new URLSearchParams(new FormData(event.target)) // event.target is the form
-            }).then((resp) => {
-                return resp.json(); // or resp.text() or whatever the server sends
-            }).then((body) => {
-                alert("Update succeeded");
-                // TODO: Handle the response body if needed
-            }).catch((error) => {
-                // Handle error
-                alert("Update failed: " + error);
+        script.
+            document.forms['YachtForm'].addEventListener('submit', (event) => {
+                event.preventDefault();
+                fetch(event.target.action, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    body: new URLSearchParams(new FormData(event.target))
+                }).then((resp) => {
+                    return resp.json();
+                }).then((body) => {
+                    alert("Update succeeded");
+                }).catch((error) => {
+                    alert("Update failed: " + error);
+                });
             });
-        });
