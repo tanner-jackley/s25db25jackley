@@ -1,0 +1,39 @@
+extends layout
+block content
+    h1= title
+    - let yachtid = toShow._id
+    - let yachtbrand = toShow.brand
+    - let yachtcost = toShow.cost
+    - let yachtsize = toShow.size
+    div.row(class='mb-2')
+        div.mr-1 ID is
+        div #{yachtid}
+    - let actionid = "/resource/yachts/" + yachtid
+    form(id='YachtForm', action=actionid, method="PUT")
+        div.form-group
+            label.yachtAttr(for='brand') Yacht Brand
+            input#brand(type='text', name='brand', value=yachtbrand)
+        div.form-group
+            label.yachtAttr(for='size') Yacht Size
+            input#size(type='text', name='size', value=yachtsize)
+        div.form-group
+            label.yachtAttr(for='cost') Yacht Cost
+            input#cost(type='number', name='cost', value=yachtcost)
+        input(type="submit", value="Update Yacht", class="btn btn-primary")
+    script.
+        document.forms['YachtForm'].addEventListener('submit', (event) => {
+            event.preventDefault();
+            // TODO do something here to show user that form is being submitted
+            fetch(event.target.action, {
+                method: 'PUT',
+                body: new URLSearchParams(new FormData(event.target)) // event.target is the form
+            }).then((resp) => {
+                return resp.json(); // or resp.text() or whatever the server sends
+            }).then((body) => {
+                alert("Update succeeded");
+                // TODO handle body
+            }).catch((error) => {
+                // TODO handle error
+                alert("Update failed " + error);
+            });
+        });

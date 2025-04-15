@@ -60,27 +60,27 @@ exports.yacht_delete = async function(req, res) {
 
 // Handle Yacht update form on PUT.
 exports.yacht_update_put = async function(req, res) {
-    console.log(`update on id ${req.params.id} with body
-    ${JSON.stringify(req.body)}`)
+    console.log(`update on id ${req.params.id} with body ${JSON.stringify(req.body)}`);
     try {
-        let toUpdate = await Yacht.findById( req.params.id)
+        let toUpdate = await Yacht.findById(req.params.id);
 
         // If the yacht is not found, return a 404 error
         if (!toUpdate) {
             res.status(404).send(`{"error": "Yacht with id ${req.params.id} not found"}`);
             return;
         }
-        
-        // Do updates of properties
-        if(req.body.yacht_type)
-        toUpdate.yacht_type = req.body.yacht_type;
-        if(req.body.cost) toUpdate.cost = req.body.cost;
-        if(req.body.size) toUpdate.size = req.body.size;
+
+        // Update the properties if they are defined in the request body
+        if (req.body.brand) toUpdate.brand = req.body.brand;
+        if (req.body.year_built) toUpdate.year_built = req.body.year_built;
+        if (req.body.engine_power) toUpdate.engine_power = req.body.engine_power;
+
+        // Save the updated yacht
         let result = await toUpdate.save();
-        console.log("Success " + result)
-        res.send(result)
+        console.log("Update successful:", result);
+        res.send(result);
     } catch (err) {
-        res.status(500)
+                res.status(500)
         res.send(`{"error": ${err}: Update for id ${req.params.id}
         failed`);
     }
@@ -114,3 +114,31 @@ exports.yacht_view_one_Page = async function(req, res) {
     }
     };
 
+// Handle building the view for creating a yacht.
+// No body, no in path parameter, no query.
+// Does not need to be async
+exports.yacht_create_Page = function(req, res) {
+    console.log("create view")
+    try{
+        res.render('yachtcreate', { title: 'Yacht Create'});
+    }
+    catch(err){
+        res.status(500)
+        res.send(`{'error': '${err}'}`);
+    }
+};
+
+
+// Handle building the view for updating a yacht.
+// query provides the id
+exports.yacht_update_Page = async function(req, res) {
+    console.log("update view for item "+req.query.id)
+    try{
+        let result = await Yacht.findById(req.query.id)
+        res.render('yachtupdate', { title: 'Yacht Update', toShow: result });
+    }
+    catch(err){
+        res.status(500)
+        res.send(`{'error': '${err}'}`);
+    }
+};
