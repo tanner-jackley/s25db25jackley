@@ -4,13 +4,13 @@ block content
     form(id='YachtForm', action="/resource/yachts", method="POST", class="container mt-4")
         div.form-group
             label.yachtAttr(for='brand', class="form-label") Yacht Brand
-            input#brand(type='text', name='brand', placeholder="Enter yacht brand")
+            input#brand(type='text', name='brand', class="form-control", placeholder="Enter yacht brand")
         div.form-group
-            label.yachtAttr(for='size', class="form-label") Yacht Size
-            input#size(type='text', name='size', placeholder="Enter yacht size")
+            label.yachtAttr(for='year_built', class="form-label") Year Built
+            input#year_built(type='number', name='year_built', class="form-control", placeholder="Enter year built")
         div.form-group
-            label.yachtAttr(for='cost', class="form-label") Yacht Cost
-            input#cost(type='number', name='cost', placeholder="Enter yacht cost")
+            label.yachtAttr(for='engine_power', class="form-label") Engine Power (HP)
+            input#engine_power(type='number', name='engine_power', class="form-control", placeholder="Enter engine power")
         input(type="submit", value="Create Yacht", class="btn btn-primary mt-3")
     script.
         document.forms['YachtForm'].addEventListener('submit', (event) => {

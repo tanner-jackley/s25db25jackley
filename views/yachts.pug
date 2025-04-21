@@ -2,13 +2,19 @@ extends layout
 
 block content
   h1= title
+  button.btn(class="btn-primary", onclick=`dispatch("/yachts/create")`) Create Yacht
   - let items = results;
   div(class="container-fluid")
     div(class="row m-1")
       each yacht, index in items
-        - let destination = `dispatch(\"/yachts/update?id=${yacht._id}\")`
         div(class="col-sm-2", onclick=`buy(${index})`) Brand: #{yacht.brand}, Year Built: #{yacht.year_built}, Engine Power: #{yacht.engine_power}
-        button.btn( class="btn-primary ml-1", onclick= destination) Update
+        div.flex-grow-1
+          - let destination = `dispatch(\"/yachts/update?id=${yacht._id}\")`
+          button.btn(class="btn-warning ml-2", onclick=destination) Update
+          - let destination2 = `dispatch(\"/yachts/detail?id=${yacht._id}\")`
+          button.btn(class="btn-primary ml-2", onclick=destination2) Details
+          - let destination3 = `dispatch(\"/yachts/delete?id=${yacht._id}\")`
+          button.btn(class="btn-danger ml-2", onclick=destination3) Delete
 
   script.
     function buy(index) {
