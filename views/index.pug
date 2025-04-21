@@ -1,20 +1,11 @@
 extends layout
-
 block content
-  h1= title
-  p Welcome to Tanner Jackley's #{title}
-  button(type="button", class="btn btn-primary", onclick="faster()") Sample Button 
-  div(id="faster") add in extra 
-
-  script.  
-    var value = 1;
-    var amt = 2;
-
-    function faster() {
-      amt *= 2;
-      value += amt;
-      
-      document.getElementById("faster").innerHTML = `Faster ${value} times ${amt}`;
-    }
-
-  a(href="./yachts") Yachts
+  if (!user)
+    a(href="/login") Login
+    br
+    a(href="/register") Register
+  if (user)
+    p You are currently logged in as #{user.username}
+    a(href="/yachts") Take me to yachts
+    br
+    a(href="/logout") Logout
