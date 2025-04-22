@@ -1,7 +1,12 @@
 const mongoose = require("mongoose")
 const yachtSchema = mongoose.Schema({
     brand: String,
-    year_built: Number,
+    year_built: {
+        type: Number,
+        required: true, 
+        min: 1900,      
+        max: new Date().getFullYear() 
+    },
     engine_power: {
         type: Number,
         min: 100,
